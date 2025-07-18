@@ -1,0 +1,294 @@
+/* Amazon Review Analyzer - Pixel Style CSS */
+
+/* Floating scan button */
+#review-analyzer-button {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 10000;
+  cursor: pointer;
+  font-family: 'Courier New', monospace;
+  user-select: none;
+}
+
+.pixel-button {
+  background: #000000;
+  color: #00ff00;
+  border: 4px solid #00ff00;
+  padding: 12px 16px;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+  position: relative;
+  transition: all 0.2s ease;
+  box-shadow: 
+    4px 4px 0px #004400,
+    8px 8px 0px #002200;
+  text-shadow: 2px 2px 0px #004400;
+}
+
+.pixel-button::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: #00ff00;
+  z-index: -1;
+  opacity: 0.3;
+}
+
+.pixel-button::after {
+  content: '';
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 8px;
+  height: 8px;
+  background: #00ff00;
+  animation: blink 1s infinite;
+}
+
+.pixel-button:hover {
+  background: #004400;
+  color: #ffffff;
+  transform: translate(2px, 2px);
+  box-shadow: 
+    2px 2px 0px #004400,
+    4px 4px 0px #002200;
+}
+
+.pixel-button.analyzed {
+  background: #000044;
+  color: #00ffff;
+  border-color: #00ffff;
+  box-shadow: 
+    4px 4px 0px #002244,
+    8px 8px 0px #001122;
+}
+
+.pixel-button.analyzed::after {
+  background: #00ffff;
+}
+
+.pixel-button.error {
+  background: #440000;
+  color: #ff0000;
+  border-color: #ff0000;
+  box-shadow: 
+    4px 4px 0px #220000,
+    8px 8px 0px #110000;
+}
+
+.pixel-button.error::after {
+  background: #ff0000;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* Review highlighting */
+.review-good {
+  position: relative;
+  border: 3px solid #00ff00 !important;
+  background: rgba(0, 255, 0, 0.1) !important;
+  box-shadow: 
+    inset 0 0 0 2px #004400,
+    4px 4px 0px rgba(0, 255, 0, 0.3) !important;
+  margin: 8px 0 !important;
+  padding: 8px !important;
+}
+
+.review-good::before {
+  content: '✓ TRUSTED';
+  position: absolute;
+  top: -12px;
+  left: 8px;
+  background: #00ff00;
+  color: #000000;
+  padding: 2px 8px;
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  font-weight: bold;
+  z-index: 1000;
+  border: 2px solid #004400;
+}
+
+.review-suspicious {
+  position: relative;
+  border: 3px solid #ff0000 !important;
+  background: rgba(255, 0, 0, 0.1) !important;
+  box-shadow: 
+    inset 0 0 0 2px #440000,
+    4px 4px 0px rgba(255, 0, 0, 0.3) !important;
+  margin: 8px 0 !important;
+  padding: 8px !important;
+}
+
+.review-suspicious::before {
+  content: '⚠ SUSPICIOUS';
+  position: absolute;
+  top: -12px;
+  left: 8px;
+  background: #ff0000;
+  color: #ffffff;
+  padding: 2px 8px;
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  font-weight: bold;
+  z-index: 1000;
+  border: 2px solid #440000;
+}
+
+/* Pixel-perfect corners */
+.review-good::after,
+.review-suspicious::after {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  width: 12px;
+  height: 12px;
+  background: inherit;
+  border: inherit;
+  z-index: -1;
+}
+
+/* Additional retro effects */
+.review-good,
+.review-suspicious {
+  animation: highlightPulse 0.5s ease-out;
+  font-family: 'Courier New', monospace;
+}
+
+@keyframes highlightPulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.02);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Scan line effect for reviews */
+.review-good::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #00ff00, transparent);
+  animation: reviewScan 3s linear infinite;
+  z-index: 100;
+}
+
+.review-suspicious::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #ff0000, transparent);
+  animation: reviewScan 3s linear infinite;
+  z-index: 100;
+}
+
+@keyframes reviewScan {
+  0% { transform: translateY(0); opacity: 0.8; }
+  50% { opacity: 1; }
+  100% { transform: translateY(50px); opacity: 0; }
+}
+
+/* Override Amazon's existing styles */
+[data-hook="review"] {
+  transition: all 0.3s ease;
+}
+
+[data-hook="review"]:hover.review-good,
+[data-hook="review"]:hover.review-suspicious {
+  transform: translateY(-2px);
+}
+
+/* Retro scrollbar for Amazon pages */
+.review-good::-webkit-scrollbar,
+.review-suspicious::-webkit-scrollbar {
+  width: 8px;
+}
+
+.review-good::-webkit-scrollbar-track {
+  background: #002200;
+  border: 1px solid #00ff00;
+}
+
+.review-good::-webkit-scrollbar-thumb {
+  background: #00ff00;
+  border: 1px solid #004400;
+}
+
+.review-suspicious::-webkit-scrollbar-track {
+  background: #220000;
+  border: 1px solid #ff0000;
+}
+
+.review-suspicious::-webkit-scrollbar-thumb {
+  background: #ff0000;
+  border: 1px solid #440000;
+}
+
+/* Pixel grid background effect */
+body.review-analyzer-active {
+  background-image: 
+    linear-gradient(90deg, rgba(0, 255, 0, 0.02) 1px, transparent 1px),
+    linear-gradient(rgba(0, 255, 0, 0.02) 1px, transparent 1px);
+  background-size: 8px 8px;
+}
+
+/* Loading animation for scan button */
+@keyframes loadingDots {
+  0%, 20% { opacity: 0; }
+  50% { opacity: 1; }
+  80%, 100% { opacity: 0; }
+}
+
+.pixel-button.loading::after {
+  content: '...';
+  animation: loadingDots 1.5s infinite;
+}
+
+/* High contrast mode for accessibility */
+@media (prefers-high-contrast: high) {
+  .pixel-button {
+    border-width: 6px;
+    font-weight: 900;
+  }
+  
+  .review-good,
+  .review-suspicious {
+    border-width: 5px;
+  }
+}
+
+/* Reduced motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .pixel-button,
+  .review-good,
+  .review-suspicious {
+    animation: none;
+    transition: none;
+  }
+  
+  .pixel-button:hover {
+    transform: none;
+  }
+}
